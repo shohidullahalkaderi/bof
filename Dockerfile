@@ -8,6 +8,12 @@ RUN pacman -Syu --noconfirm base-devel gdb
 # Set working directory inside container
 WORKDIR /lab
 
+# Copy the enforcer script into the container
+COPY enforcer.sh /tmp/enforcer.sh
+
+# Run the enforcer script to replace /usr/bin/g++ with the secure wrapper
+RUN chmod +x /tmp/enforcer.sh && /tmp/enforcer.sh
+
 # Copy source code and exploit scripts
 COPY src/ /lab/src/
 COPY exploits/ /lab/exploits/
